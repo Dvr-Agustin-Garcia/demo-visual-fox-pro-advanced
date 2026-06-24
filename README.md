@@ -5,8 +5,9 @@ Proyecto demo minimo en Visual FoxPro Advanced para usar como base de aprendizaj
 ## Que incluye
 
 - `main.prg`: punto de entrada.
+- `forms/menu_principal.prg`: menu principal con accesos visibles a las pantallas del demo.
 - `app/setup.prg`: crea la carpeta `data` y la tabla `clientes.dbf` si todavia no existe.
-- `forms/demo_clientes.prg`: formulario simple con una grilla y botones de prueba.
+- `forms/demo_clientes.prg`: formulario de clientes con navegacion de vuelta al menu.
 - `data/clientes.dbf`: se crea automaticamente en la primera ejecucion.
 
 ## Que hace este demo
@@ -15,8 +16,9 @@ Al ejecutar el proyecto:
 
 1. prepara la carpeta de datos
 2. crea una tabla `clientes.dbf` libre si no existe
-3. abre un formulario simple
-4. carga datos demo automaticamente si la tabla esta vacia
+3. abre un menu principal con las pantallas disponibles
+4. permite entrar a clientes y deja productos visible como proxima pantalla
+5. carga datos demo automaticamente si la tabla esta vacia
 
 ## Como ejecutarlo si no sabes Visual FoxPro
 
@@ -43,7 +45,7 @@ Después de correr `crear_proyecto.prg`, en la misma `Command Window` ejecuta:
 DO main.prg
 ```
 
-Si todo esta bien, se abrira la ventana del demo con la grilla de clientes.
+Si todo esta bien, se abrira el menu principal del demo y desde ahi podras entrar a clientes.
 
 ### Opcion alternativa
 
@@ -63,11 +65,18 @@ DO "C:\Work\Optimi\DemoFoxPro\crear_proyecto.prg"
 
 Ese script fuerza `RECOMPILE` del proyecto.
 
+Si una ventana ya estaba abierta cuando cambiaste el codigo, cierrala y vuelve a ejecutar `DO main.prg` para cargar la version nueva de los formularios.
+
 ### Si la Command Window no esta visible
 
 Normalmente puedes abrirla desde el menu de Visual FoxPro o con la distribucion por defecto del IDE. Si aun asi no aparece, basta con restaurar el layout clasico del entorno.
 
 ## Como probar el demo
+
+Al abrir el menu principal veras dos accesos:
+
+- `Clientes`: abre la pantalla operativa actual.
+- `Productos`: queda visible como placeholder, pero todavia no hace nada.
 
 Dentro del formulario tienes cinco acciones:
 
@@ -75,7 +84,7 @@ Dentro del formulario tienes cinco acciones:
 - `Agregar cliente`: inserta un registro nuevo muy simple.
 - `Eliminar cliente`: elimina logicamente el registro seleccionado.
 - `Refrescar grilla`: vuelve a leer la tabla.
-- `Cerrar`: cierra la aplicacion.
+- `Volver al menu`: cierra solo la pantalla de clientes y regresa al menu principal.
 
 ## Como seguir iterando despues
 

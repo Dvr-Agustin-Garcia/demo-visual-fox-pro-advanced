@@ -1,7 +1,7 @@
 DEFINE CLASS frmDemoClientes AS Form
     Caption = 'DemoFoxPro | Clientes'
-    Width = 900
-    Height = 520
+    Width = 980
+    Height = 620
     AutoCenter = .T.
     Closable = .T.
     MaxButton = .F.
@@ -30,33 +30,143 @@ DEFINE CLASS frmDemoClientes AS Form
     ENDPROC
 
     PROCEDURE configurar_interfaz
-        THIS.BackColor = RGB(245, 247, 250)
+        THIS.BackColor = RGB(241, 245, 249)
+
+        THIS.AddObject('shpHeader', 'Shape')
+        WITH THIS.shpHeader
+            .Left = 20
+            .Top = 20
+            .Width = 940
+            .Height = 145
+            .BackColor = RGB(255, 255, 255)
+            .BorderColor = RGB(218, 226, 237)
+            .Visible = .T.
+        ENDWITH
+
+        THIS.AddObject('shpAcciones', 'Shape')
+        WITH THIS.shpAcciones
+            .Left = 20
+            .Top = 185
+            .Width = 940
+            .Height = 74
+            .BackColor = RGB(255, 255, 255)
+            .BorderColor = RGB(218, 226, 237)
+            .Visible = .T.
+        ENDWITH
+
+        THIS.AddObject('shpGrid', 'Shape')
+        WITH THIS.shpGrid
+            .Left = 20
+            .Top = 278
+            .Width = 940
+            .Height = 285
+            .BackColor = RGB(255, 255, 255)
+            .BorderColor = RGB(218, 226, 237)
+            .Visible = .T.
+        ENDWITH
+
+        THIS.AddObject('lblMarca', 'Label')
+        WITH THIS.lblMarca
+            .Caption = 'DEMOFOXPRO / CLIENTES'
+            .Left = 40
+            .Top = 34
+            .Width = 220
+            .Height = 20
+            .FontName = 'Segoe UI'
+            .FontSize = 9
+            .FontBold = .T.
+            .ForeColor = RGB(37, 99, 235)
+            .BackStyle = 0
+            .Visible = .T.
+        ENDWITH
+
+        THIS.AddObject('cmdNavMenu', 'CommandButton')
+        WITH THIS.cmdNavMenu
+            .Caption = 'Menu principal'
+            .Left = 556
+            .Top = 30
+            .Width = 122
+            .Height = 34
+            .FontName = 'Segoe UI'
+            .FontBold = .T.
+            .Style = 0
+            .BackColor = RGB(45, 62, 80)
+            .ForeColor = RGB(45, 62, 80)
+            .Visible = .T.
+        ENDWITH
+        BINDEVENT(THIS.cmdNavMenu, 'Click', THIS, 'accion_cerrar')
+
+        THIS.AddObject('cmdNavClientes', 'CommandButton')
+        WITH THIS.cmdNavClientes
+            .Caption = 'Clientes'
+            .Left = 692
+            .Top = 30
+            .Width = 122
+            .Height = 34
+            .FontName = 'Segoe UI'
+            .FontBold = .T.
+            .Style = 0
+            .BackColor = RGB(37, 99, 235)
+            .ForeColor = RGB(45, 62, 80)
+            .Visible = .T.
+        ENDWITH
+        BINDEVENT(THIS.cmdNavClientes, 'Click', THIS, 'accion_actual')
+
+        THIS.AddObject('cmdNavProductos', 'CommandButton')
+        WITH THIS.cmdNavProductos
+            .Caption = 'Productos'
+            .Left = 828
+            .Top = 30
+            .Width = 122
+            .Height = 34
+            .FontName = 'Segoe UI'
+            .FontBold = .T.
+            .Style = 0
+            .BackColor = RGB(229, 231, 235)
+            .ForeColor = RGB(120, 130, 140)
+            .Enabled = .F.
+            .Visible = .T.
+        ENDWITH
 
         THIS.AddObject('lblTitulo', 'Label')
         WITH THIS.lblTitulo
-            .Caption = 'Proyecto demo simple para iterar'
-            .Left = 22
-            .Top = 18
-            .Width = 420
-            .Height = 30
+            .Caption = 'Gestion simple de clientes'
+            .Left = 40
+            .Top = 78
+            .Width = 380
+            .Height = 32
             .FontName = 'Segoe UI'
-            .FontSize = 16
+            .FontSize = 18
             .FontBold = .T.
-            .ForeColor = RGB(45, 62, 80)
+            .ForeColor = RGB(30, 41, 59)
             .BackStyle = 0
             .Visible = .T.
         ENDWITH
 
         THIS.AddObject('lblAyuda', 'Label')
         WITH THIS.lblAyuda
-            .Caption = 'La tabla se crea sola. Puedes cargar datos demo, agregar un registro y ver el resultado en la grilla.'
-            .Left = 22
-            .Top = 66
-            .Width = 760
-            .Height = 26
+            .Caption = 'La tabla se crea sola. Desde aqui puedes cargar datos demo, agregar un cliente, eliminarlo de forma logica y volver al menu principal cuando quieras.'
+            .Left = 40
+            .Top = 116
+            .Width = 610
+            .Height = 32
             .FontName = 'Segoe UI'
             .FontSize = 9
-            .ForeColor = RGB(85, 95, 105)
+            .ForeColor = RGB(71, 85, 105)
+            .BackStyle = 0
+            .Visible = .T.
+        ENDWITH
+
+        THIS.AddObject('lblEstado', 'Label')
+        WITH THIS.lblEstado
+            .Caption = 'Pantalla actual' + CHR(13) + 'Clientes activo' + CHR(13) + CHR(13) + 'Siguiente' + CHR(13) + 'Productos reservado'
+            .Left = 710
+            .Top = 88
+            .Width = 210
+            .Height = 64
+            .FontName = 'Segoe UI'
+            .FontSize = 9
+            .ForeColor = RGB(45, 62, 80)
             .BackStyle = 0
             .Visible = .T.
         ENDWITH
@@ -64,11 +174,15 @@ DEFINE CLASS frmDemoClientes AS Form
         THIS.AddObject('cmdCargarDemo', 'CommandButton')
         WITH THIS.cmdCargarDemo
             .Caption = 'Cargar datos demo'
-            .Left = 20
-            .Top = 104
-            .Width = 150
-            .Height = 32
+            .Left = 40
+            .Top = 204
+            .Width = 160
+            .Height = 36
             .FontName = 'Segoe UI'
+            .FontBold = .T.
+            .Style = 0
+            .BackColor = RGB(37, 99, 235)
+            .ForeColor = RGB(45, 62, 80)
             .Visible = .T.
         ENDWITH
         BINDEVENT(THIS.cmdCargarDemo, 'Click', THIS, 'accion_cargar_demo')
@@ -76,11 +190,15 @@ DEFINE CLASS frmDemoClientes AS Form
         THIS.AddObject('cmdAgregar', 'CommandButton')
         WITH THIS.cmdAgregar
             .Caption = 'Agregar cliente'
-            .Left = 182
-            .Top = 104
-            .Width = 140
-            .Height = 32
+            .Left = 214
+            .Top = 204
+            .Width = 150
+            .Height = 36
             .FontName = 'Segoe UI'
+            .FontBold = .T.
+            .Style = 0
+            .BackColor = RGB(14, 116, 144)
+            .ForeColor = RGB(45, 62, 80)
             .Visible = .T.
         ENDWITH
         BINDEVENT(THIS.cmdAgregar, 'Click', THIS, 'accion_agregar')
@@ -88,11 +206,15 @@ DEFINE CLASS frmDemoClientes AS Form
         THIS.AddObject('cmdEliminar', 'CommandButton')
         WITH THIS.cmdEliminar
             .Caption = 'Eliminar cliente'
-            .Left = 344
-            .Top = 104
+            .Left = 378
+            .Top = 204
             .Width = 150
-            .Height = 32
+            .Height = 36
             .FontName = 'Segoe UI'
+            .FontBold = .T.
+            .Style = 0
+            .BackColor = RGB(185, 28, 28)
+            .ForeColor = RGB(45, 62, 80)
             .Visible = .T.
         ENDWITH
         BINDEVENT(THIS.cmdEliminar, 'Click', THIS, 'accion_eliminar')
@@ -100,33 +222,56 @@ DEFINE CLASS frmDemoClientes AS Form
         THIS.AddObject('cmdRefrescar', 'CommandButton')
         WITH THIS.cmdRefrescar
             .Caption = 'Refrescar grilla'
-            .Left = 506
-            .Top = 104
-            .Width = 140
-            .Height = 32
+            .Left = 542
+            .Top = 204
+            .Width = 150
+            .Height = 36
             .FontName = 'Segoe UI'
+            .FontBold = .T.
+            .Style = 0
+            .BackColor = RGB(51, 65, 85)
+            .ForeColor = RGB(45, 62, 80)
             .Visible = .T.
         ENDWITH
         BINDEVENT(THIS.cmdRefrescar, 'Click', THIS, 'refrescar_grilla')
 
         THIS.AddObject('cmdCerrar', 'CommandButton')
         WITH THIS.cmdCerrar
-            .Caption = 'Cerrar'
-            .Left = 760
-            .Top = 104
-            .Width = 100
-            .Height = 32
+            .Caption = 'Volver al menu'
+            .Left = 706
+            .Top = 204
+            .Width = 214
+            .Height = 36
             .FontName = 'Segoe UI'
+            .FontBold = .T.
+            .Style = 0
+            .BackColor = RGB(15, 23, 42)
+            .ForeColor = RGB(45, 62, 80)
             .Visible = .T.
         ENDWITH
         BINDEVENT(THIS.cmdCerrar, 'Click', THIS, 'accion_cerrar')
 
+        THIS.AddObject('lblGridTitulo', 'Label')
+        WITH THIS.lblGridTitulo
+            .Caption = 'Listado actual'
+            .Left = 40
+            .Top = 292
+            .Width = 180
+            .Height = 22
+            .FontName = 'Segoe UI'
+            .FontSize = 10
+            .FontBold = .T.
+            .ForeColor = RGB(45, 62, 80)
+            .BackStyle = 0
+            .Visible = .T.
+        ENDWITH
+
         THIS.AddObject('grdClientes', 'Grid')
         WITH THIS.grdClientes
-            .Left = 20
-            .Top = 156
-            .Width = 840
-            .Height = 320
+            .Left = 40
+            .Top = 320
+            .Width = 900
+            .Height = 220
             .RecordSource = 'clientes'
             .ColumnCount = 5
             .DeleteMark = .F.
@@ -137,6 +282,20 @@ DEFINE CLASS frmDemoClientes AS Form
             .FontName = 'Segoe UI'
             .FontSize = 9
             .HeaderHeight = 24
+            .Visible = .T.
+        ENDWITH
+
+        THIS.AddObject('lblPie', 'Label')
+        WITH THIS.lblPie
+            .Caption = 'Navegacion disponible: Menu principal y Clientes. Productos queda visible pero sin comportamiento hasta la siguiente iteracion.'
+            .Left = 40
+            .Top = 572
+            .Width = 760
+            .Height = 18
+            .FontName = 'Segoe UI'
+            .FontSize = 8
+            .ForeColor = RGB(100, 116, 139)
+            .BackStyle = 0
             .Visible = .T.
         ENDWITH
 
@@ -215,22 +374,22 @@ DEFINE CLASS frmDemoClientes AS Form
         ENDWITH
 
         WITH THIS.grdClientes.Columns(2)
-            .Width = 330
+            .Width = 360
             .Header1.Caption = 'Cliente'
         ENDWITH
 
         WITH THIS.grdClientes.Columns(3)
-            .Width = 170
+            .Width = 190
             .Header1.Caption = 'Ciudad'
         ENDWITH
 
         WITH THIS.grdClientes.Columns(4)
-            .Width = 70
+            .Width = 80
             .Header1.Caption = 'Activo'
         ENDWITH
 
         WITH THIS.grdClientes.Columns(5)
-            .Width = 120
+            .Width = 130
             .Header1.Caption = 'Alta'
         ENDWITH
     ENDPROC
@@ -249,10 +408,13 @@ DEFINE CLASS frmDemoClientes AS Form
         THIS.Release()
     ENDPROC
 
+    PROCEDURE accion_actual
+        RETURN
+    ENDPROC
+
     PROCEDURE Destroy
         IF USED('clientes')
             USE IN clientes
         ENDIF
-        CLEAR EVENTS
     ENDPROC
 ENDDEFINE

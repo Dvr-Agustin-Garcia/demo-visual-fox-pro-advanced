@@ -24,6 +24,7 @@ Esta memoria concentra lo aprendido y validado durante la construcción del demo
 
 - El repo es un demo text-first basado en `.prg`; no se versionan formularios binarios `.scx` ni la lógica principal dentro de archivos visuales.
 - El flujo de arranque principal está en `main.prg`.
+- La pantalla raíz del demo ahora es `forms/menu_principal.prg`; desde ahí se abre `forms/demo_clientes.prg`.
 - La preparación de datos está en `app/setup.prg`.
 - El formulario demo está en `forms/demo_clientes.prg`.
 - El proyecto FoxPro `DemoFoxPro.pjx/.pjt` se genera o recompila desde `crear_proyecto.prg`.
@@ -41,6 +42,8 @@ Esta memoria concentra lo aprendido y validado durante la construcción del demo
 - La recarga de datos demo debe cerrar el alias `clientes`, abrir `clientes.dbf` de forma exclusiva en un alias temporal, hacer `ZAP`, reinsertar datos y reabrir la tabla para la UI.
 - El borrado implementado en el demo es lógico con `DELETE`; no hace `PACK` automático.
 - Para calcular el próximo ID conviene ignorar registros borrados lógicamente con `WHERE !DELETED()` y usar `NVL()` sobre el resultado de `MAX(id)`.
+- Para volver desde una pantalla modal al menú principal sin cerrar la aplicación, `CLEAR EVENTS` debe quedar solo en el `Destroy` del formulario raíz; las pantallas hijas solo deben hacer `Release()` y liberar sus alias.
+- En este demo, `CommandButton` creados en runtime con `Style = 1` se renderizaron sin texto visible en VFPA; para botones navegables conviene usar estilo estándar.
 
 ## Convenciones visuales aprendidas en este demo
 
@@ -48,6 +51,7 @@ Esta memoria concentra lo aprendido y validado durante la construcción del demo
 - Para títulos y subtítulos, dar altura explícita al `Label` si se aumenta `FontSize`; si no, el texto puede solaparse con el control siguiente.
 - El espaciado vertical entre título, subtítulo, botones y grilla debe ajustarse manualmente. No confiar en autosizing.
 - En este demo se usa `Segoe UI`, fondo claro y cabeceras sobrias para una UI simple de legacy modernizado.
+- Para marcar navegación disponible sin implementar aún una pantalla, conviene dejar el botón visible pero deshabilitado en vez de inventar un formulario vacío.
 - La grilla está pensada para visualización, no para edición directa: `ReadOnly = .T.`, `DeleteMark = .F.`, `RecordMark = .F.`.
 
 ## Forma de trabajar esperada para este repo
